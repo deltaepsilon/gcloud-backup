@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const program = require('commander');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -33,24 +34,24 @@ function upload(filesToUpload, bucket, metadata, counter = 0) {
     var remoteFile = bucket.file(file.remotePath || file.name);
     var readStream = fs.createReadStream(file.localPath);
     var filename = (file.remotePath || file.name).replace(/.+\//, '');
-    var mb =Math.round(file.stat.size/100000)/10;
+    var mb = Math.round(file.stat.size / 100000) / 10;
     var bar = new ProgressBar(` ${filename} (${mb}mb) [:bar] :percent :etas`, {
       width: 20,
       total: file.stat.size,
       clear: true
     });
 
-    readStream.on('data', function(chunk) {
+    readStream.on('data', function (chunk) {
       bar.tick(chunk.length);
     });
-    
+
     readStream
       .pipe(remoteFile.createWriteStream({ gzip: true, metadata: metadata }))
       .on('error', err => reject(err))
       .on('finish', res => resolve(remoteFile));
   })
-    .then(function(remoteFile) {
-      return new Promise(function(resolve, reject) {
+    .then(function (remoteFile) {
+      return new Promise(function (resolve, reject) {
         remoteFile.getMetadata((err, metadata) => resolve(setMd5Hash(file.localPath, metadata.md5Hash)));
       });
     })
@@ -71,6 +72,9 @@ program.arguments('<folder>')
     if (!program.bucket) return console.log(chalk.red('<bucket> missing. See $: gbackup --help'));
     if (!program.projectId) return console.log(chalk.red('<projectId> missing. See $: gbackup --help'));
     if (!program.serviceAccount) return console.log(chalk.red('<serviceAccount> missing. See $: gbackup --help'));
+
+    if (folder[0] !== '/') folder = process.cwd() + '/' + folder;
+    if (program.serviceAccount[0] !== '/') program.serviceAccount = process.cwd() + '/' + program.serviceAccount;
 
     var metadata = { storageClass: program.storageClass || 'COLDLINE' };
     start(folder, program.bucket, program.projectId, program.serviceAccount, metadata)
@@ -115,12 +119,15 @@ function start(path, bucketName, projectId, keyFilename, metadata) {
       console.log(chalk.yellow(`Files changed: ${filesChanged.length}`));
 
       console.log(chalk.green('Beginning uploads...'));
-      
+
       return upload(filesToUpload, bucket, metadata)
-        .then(function() {
+        .then(function () {
           console.log(chalk.green('Uploading changed files...'));
           return upload(filesChanged, bucket, metadata);
         });
+    })
+    .catch(function(err) {
+      console.log(chalk.red(err));
     });
 }
 
