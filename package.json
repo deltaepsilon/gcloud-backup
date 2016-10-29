@@ -1,0 +1,35 @@
+{
+  "name": "gcloud-backup",
+  "version": "1.0.0",
+  "description": "A single-purpose Node.js CLI to backup any local folder to any Google Cloud Storage bucket.",
+  "main": "index.js",
+  "bin": {
+    "gbackup": "bin/run.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deltaepsilon/gcloud-backup.git"
+  },
+  "keywords": [
+    "Google",
+    "Cloud",
+    "Platform",
+    "Storage",
+    "backup",
+    "gbackup"
+  ],
+  "author": "Chris Esplin <chris@quiver.is>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deltaepsilon/gcloud-backup/issues"
+  },
+  "homepage": "https://github.com/deltaepsilon/gcloud-backup#readme",
+  "dependencies": {
+    "@google-cloud/storage": "^0.4.0",
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "fs": "0.0.1-security",
+    "fs-xattr": "^0.1.14",
+    "progress": "^1.1.8"
+  }
+}
