@@ -2,7 +2,7 @@
 A single-purpose Node.js CLI to backup any local folder to any Google Cloud Storage bucket, regardless of size.
 
 ## Installation
-```npm install -g gbackup``` or ```npm install gbackup``` if you want to use this programatically.
+```npm install -g gcloud-backup``` or ```npm install gcloud-backup``` if you want to use this programatically.
 
 ## Testing
 Are you kidding? This is not for mission-critical stuff. It's ~130 lines of JavaScript. And you have to test these things manually anyway... so I'm not complicating this.
