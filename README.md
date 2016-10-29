@@ -29,6 +29,7 @@ I'm currently backing up a bunch of videos from my desktop to a storage bucket.
 - Project Id: ```chrisesplin```
 
 ***How the CLI call looks***
+
 ```gbackup /Users/quiver/Desktop/video -b coldline.chrisesplin.com -s ~/.gcloud/chris-esplin-service-account.json -p chrisesplin```
 
 You have to pass in all of those flags to make it work. Also, you can pass in a storage class like this:
@@ -43,7 +44,7 @@ I haven't tested this at all, but this module does expose a ```start()``` functi
 Here's how ```start()``` looks.
 
 ```javascript
-var gbackup = require('gbackup');
+var gbackup = require('gcloud-backup');
 var path = '/Users/myUser/Desktop/someFolder';
 var bucketName = 'my-terrible-bucket';
 var projectId = 'some-project-id-123456';

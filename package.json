@@ -1,6 +1,6 @@
 {
   "name": "gcloud-backup",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A single-purpose Node.js CLI to backup any local folder to any Google Cloud Storage bucket.",
   "main": "index.js",
   "bin": {
