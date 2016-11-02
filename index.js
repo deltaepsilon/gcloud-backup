@@ -157,8 +157,7 @@ function start(path, bucketName, projectId, keyFilename, excludedRegex, metadata
             return upload(filesChanged, bucket, metadata);
           });
       } else {
-        console.log(chalk.green('No files uploaded'));
-        return true;
+        return 'No files uploaded';
       }
 
 
