@@ -30,7 +30,7 @@ I'm currently backing up a bunch of videos from my desktop to a storage bucket.
 
 ***How the CLI call looks***
 
-```gbackup /Users/quiver/Desktop/video -b coldline.chrisesplin.com -s ~/.gcloud/chris-esplin-service-account.json -p chrisesplin```
+```gbackup /Users/quiver/Desktop/video -b coldline.chrisesplin.com -s ~/.gcloud/chris-esplin-service-account.json -p chrisesplin -e SkipThisFolderName```
 
 You have to pass in all of those flags to make it work. Also, you can pass in a storage class like this:
 ```-s NEARLINE``` or ```-s REGIONAL```
@@ -49,10 +49,11 @@ var path = '/Users/myUser/Desktop/someFolder';
 var bucketName = 'my-terrible-bucket';
 var projectId = 'some-project-id-123456';
 var serviceAccount = '/Users/myUser/.super-secret-folder/service-account.json';
+var excludedRegex = 'MassiveFilesToIgnore';
 var metadata = {
   storageClass: 'NEARLINE'
 };
-gbackup.start(path, bucketName, projectId, serviceAccount, metadata);
+gbackup.start(path, bucketName, projectId, serviceAccount, excludedRegex, metadata);
 ```
 
 The only tricky thing to note here is that the ```metadata``` should only include metadata that you want to set for all files. Most files will set their own metadata just fine, but if you want to get fancy and maybe even serve these files publicly, that's entirely up to you. It's outside of my one-day budget to create this tool, so I'm not testing it unless this thing gets popular and people bug me about it.
